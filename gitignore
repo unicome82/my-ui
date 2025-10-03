@@ -1,4 +1,11 @@
+# Node modules
 node_modules/
+
+# Build output
 dist/
+
+# Environment variables (파일)
 .env
+
+# VSCode settings
 .vscode/
