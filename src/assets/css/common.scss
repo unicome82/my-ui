@@ -1,0 +1,77 @@
+@use './variable' as *;
+@use './mixin' as *;
+@use './base' as *;
+
+/* Common */
+body {
+  @include font($font-S, 400);
+  color: #000;
+  background: #f1f0ef;
+}
+
+/* Layout */
+.wrap {
+  letter-spacing: 0.1em;
+  .container {
+    @include flex(row, flex-start, unset, 0);
+  }
+  .nav {
+    padding: $spacing-M;
+  }
+}
+
+/* Header */
+.header {
+  @include position(fixed, left, top);
+  @include flex(row, space-between, flex-start);
+  @include transition;
+  padding: $spacing-XL 4%;
+  width: 100%;
+  background: rgba(241, 240, 239, 0.8);
+  backdrop-filter: blur(10px);
+  .logo {
+    @include transition;
+    @include font(36px, 900);
+  }
+  .btn-link {
+    @include flex(column, flex-start, flex-end, 0.25em);
+    @include transition;
+    @include font($font-XS, 500);
+    &:after {
+      content: '';
+      width: 2em;
+      height: 1px;
+      border-bottom: 1px solid #000;
+      transition: inherit;
+      transition-delay: 0.1s;
+    }
+    &:hover {
+      &:after {
+        width: 150%;
+      }
+    }
+  }
+  &.fixed {
+    padding: $spacing-M 4%;
+    .logo {
+      font-size: $font-L;
+    }
+  }
+  &.hidden {
+    transform: translateY(-100%);
+  }
+}
+
+/* Main Title */
+.main-copy {
+  @include flex(column, flex-end, flex-start, 3em);
+  padding: 4%;
+  height: 100vh;
+  border-bottom: 1px solid #000;
+  .tit {
+    @include font(8vw, 900, 1);
+  }
+  .txt {
+    @include font(1.2vw);
+  }
+}
