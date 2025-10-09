@@ -1,12 +1,16 @@
 @use './variable' as *;
 @use './mixin' as *;
 @use './base' as *;
+@use './theme' as *;
 
 /* Common */
 body {
-  @include font($font-S, 400);
+  @include font($font-M, 400);
   color: #000;
-  background: #f1f0ef;
+  &::selection {
+    background: #000;
+    color: #fff;
+  }
 }
 
 /* Layout */
@@ -14,24 +18,40 @@ body {
   letter-spacing: 0.1em;
   .container {
     @include flex(row, flex-start, unset, 0);
+    min-height: 100vh;
   }
-  .nav {
-    padding: $spacing-M;
+  .main {
+    width: calc(100% - $nav-width);
+    max-width: calc(100% - 10em);
+    .drag-scroll {
+      @include position(sticky, unset, top);
+      background: rgba(222, 221, 220, 0.5);
+      backdrop-filter: blur(10px);
+      z-index: 8;
+    }
+  }
+  .footer {
+    @include font(11px, 200);
+    padding: 8vh 4vmax;
+    background: #000;
+    color: #fff;
   }
 }
 
 /* Header */
 .header {
   @include position(fixed, left, top);
-  @include flex(row, space-between, flex-start);
+  @include flex(row, space-between, flex-start, 1em);
   @include transition;
-  padding: $spacing-XL 4%;
+  padding: $spacing-XL 4vmax;
+  flex-wrap: wrap;
   width: 100%;
-  background: rgba(241, 240, 239, 0.8);
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(10px);
+  z-index: 10;
   .logo {
     @include transition;
-    @include font(36px, 900);
+    @include font(3vmax, 900);
   }
   .btn-link {
     @include flex(column, flex-start, flex-end, 0.25em);
@@ -52,9 +72,9 @@ body {
     }
   }
   &.fixed {
-    padding: $spacing-M 4%;
+    padding: $spacing-M 4vmax;
     .logo {
-      font-size: $font-L;
+      font-size: 2vmax;
     }
   }
   &.hidden {
@@ -64,14 +84,136 @@ body {
 
 /* Main Title */
 .main-copy {
-  @include flex(column, flex-end, flex-start, 3em);
-  padding: 4%;
+  @include flex(column, flex-end, flex-start, 1em);
+  padding: 4vmax;
   height: 100vh;
   border-bottom: 1px solid #000;
   .tit {
-    @include font(8vw, 900, 1);
+    @include font(8vmax, 900, 1);
+    margin-left: -0.05em;
   }
-  .txt {
-    @include font(1.2vw);
+  .tag-list {
+    margin-top: 3em;
+  }
+}
+
+/* Nav */
+.nav {
+  min-width: 10em;
+  width: $nav-width;
+  border-right: 1px solid #000;
+  flex-shrink: 0;
+  .nav-list {
+    @include position(sticky, unset, top);
+    padding: $spacing-L 2%;
+  }
+  .nav-item {
+    @include flex(row, center, center);
+    padding: $spacing-S;
+  }
+}
+
+/* Page Tab */
+.page-tab {
+  @include flex(row, flex-start, unset);
+  .tab {
+    @include flex(row, flex-start, center, 0.25em);
+    @include font($font-XS, 700, 1);
+    @include transition;
+    padding: $spacing-XS 24px;
+    height: $spacing-XL;
+    color: $dark-L;
+    cursor: pointer;
+    .btn-close {
+      @include flex(row, center, center);
+      @include transition;
+      margin-right: -24px;
+      padding: 4px;
+      opacity: 0;
+    }
+    &:not(:first-child):hover {
+      padding: $spacing-XS 16px;
+      .btn-close {
+        margin-right: -8px;
+        opacity: 0.8;
+      }
+    }
+    &.current {
+      background: #fff;
+      color: #000;
+    }
+  }
+}
+
+/* Tag */
+.tag-list {
+  @include font($font-XS);
+  @include flex(row, flex-start, center, 1em);
+  flex-wrap: wrap;
+  .tag {
+    &:before {
+      content: '#';
+    }
+  }
+}
+
+/* Tooltip */
+.tooltip-wrap {
+  @include position(relative);
+  z-index: 9;
+  .btn-tooltip {
+    @include flex(row, flex-start, center, 0.5em);
+    line-height: 1;
+    &:before {
+      @include flex(row, center, center);
+      @include font($font-M, 400);
+      @include transition;
+      content: '?';
+      width: 1.4em;
+      height: 1.4em;
+      border-radius: 50%;
+      border: 1px solid #000;
+      letter-spacing: 0;
+    }
+    &:hover:before {
+      background: #000;
+      color: #fff;
+    }
+  }
+  .tooltip-box {
+    @include font($font-M, 200);
+    @include shadow(3);
+    @include transition;
+    margin-top: 2em;
+    padding: $spacing-L;
+    position: absolute;
+    width: max-content;
+    max-width: 72vw;
+    background: $dark-D;
+    backdrop-filter: blur(10px);
+    color: #fff;
+    opacity: 0;
+    pointer-events: none;
+  }
+  &.show {
+    .btn-tooltip:before {
+      background: #000;
+      color: #fff;
+    }
+    .tooltip-box {
+      margin: 0;
+      opacity: 1;
+      pointer-events: unset;
+    }
+  }
+}
+
+/* Drag Scroll */
+.drag-scroll {
+  overflow: auto;
+  user-select: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }

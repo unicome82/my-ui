@@ -1,18 +1,24 @@
 //Color
+$primary-bg: #daecff;
+$primary-LL: #9ecfff;
+$primary-L: #4aa4ff;
 $primary: #007bff;
-$primary-LL: #66b2ff;
-$primary-L: #3399ff;
 $primary-D: #0056b3;
 $primary-DD: #003366;
 
+$secondary-LL: #f3d0f2;
+$secondary-L: #eb9ee9;
 $secondary: #c364c1;
+$secondary-D: #982c96;
+$secondary-DD: #570855;
 
-$light-LL: rgba(255, 255, 255, 0.2);
-$light-L: rgba(255, 255, 255, 0.4);
+$light-LL: rgba(255, 255, 255, 0.8);
+$light-L: rgba(255, 255, 255, 0.6);
 $light: rgba(255, 255, 255, 0.5);
-$light-D: rgba(255, 255, 255, 0.6);
-$light-DD: rgba(255, 255, 255, 0.8);
+$light-D: rgba(255, 255, 255, 0.4);
+$light-DD: rgba(255, 255, 255, 0.2);
 
+$dark-bg: rgba(0, 0, 0, 0.05);
 $dark-LL: rgba(0, 0, 0, 0.2);
 $dark-L: rgba(0, 0, 0, 0.4);
 $dark: rgba(0, 0, 0, 0.5);
@@ -34,8 +40,11 @@ $spacing-L: 32px;
 $spacing-XL: 40px;
 
 // Font
-$font-XS: 12px;
-$font-S: 14px;
-$font-M: 16px;
-$font-L: 20px;
-$font-XL: 24px;
+$font-XS: 11px;
+$font-S: 12px;
+$font-M: 14px;
+$font-L: 16px;
+$font-XL: 20px;
+
+//Nav Width
+$nav-width: 15vmax;

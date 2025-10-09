@@ -1,7 +1,13 @@
 /* Flex */
-//  @include flex(center, space-between);
-@mixin flex($direction: row, $justify: flex-start, $align: center, $gap: 1em) {
+@mixin flex($direction: row, $justify: flex-start, $align: center, $gap: 0) {
   display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direction;
+  gap: $gap;
+}
+@mixin inline-flex($direction: row, $justify: flex-start, $align: center, $gap: 0) {
+  display: inline-flex;
   align-items: $align;
   justify-content: $justify;
   flex-direction: $direction;
@@ -36,25 +42,39 @@
   line-height: $line-height;
 }
 
+//font 10~40
+@for $i from 10 through 40 {
+  .fs#{$i} {
+    font-size: #{$i}px !important;
+  }
+}
+
+//font weight 100~900
+@for $w from 1 through 9 {
+  .fw#{$w * 100} {
+    font-weight: #{$w * 100} !important;
+  }
+}
+
 /* shadow */
 @mixin shadow($level: 1) {
   @if $level == 1 {
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.4);
   } @else if $level == 2 {
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.5);
   } @else if $level == 3 {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 8px 8px 28px rgba(0, 0, 0, 0.6);
   }
 }
 
 /* transition */
-@mixin transition($time: 0.3s, $delay: 0) {
+@mixin transition($time: 0.3s, $delay: none) {
   transition: $time;
   transition-delay: $delay;
 }
 
 /* position */
-@mixin position($position: absolute, $x: center, $y: center) {
+@mixin position($position: absolute, $x: left, $y: top) {
   position: $position;
 
   // x
@@ -87,4 +107,67 @@
   }
 
   transform: translate($translate-x, $translate-y);
+}
+
+// Tooltip
+@mixin tooltip-position($dir, $align) {
+  @if $dir == top {
+    bottom: 100%;
+    transform: translateY(-1em);
+    @if $align == left {
+      left: 0;
+    } @else if $align == center {
+      left: 50%;
+      transform: translate(-50%, -1em);
+    } @else if $align == right {
+      right: 0;
+    }
+  } @else if $dir == bottom {
+    top: 100%;
+    transform: translateY(1em);
+    @if $align == left {
+      left: 0;
+    } @else if $align == center {
+      left: 50%;
+      transform: translate(-50%, 1em);
+    } @else if $align == right {
+      right: 0;
+    }
+  } @else if $dir == left {
+    right: 100%;
+    transform: translateX(-1em);
+    @if $align == top {
+      top: 0;
+    } @else if $align == center {
+      top: 50%;
+      transform: translate(-1em, -50%);
+    } @else if $align == bottom {
+      bottom: 0;
+    }
+  } @else if $dir == right {
+    left: 100%;
+    transform: translateX(1em);
+    @if $align == top {
+      top: 0;
+    } @else if $align == center {
+      top: 50%;
+      transform: translate(1em, -50%);
+    } @else if $align == bottom {
+      bottom: 0;
+    }
+  }
+}
+
+// =====================================
+// 자동 생성: top-left, top-center, ...
+// =====================================
+$directions: top, bottom, left, right;
+$alignments: left, center, right, top, bottom;
+
+@each $dir in $directions {
+  @each $align in $alignments {
+    .tooltip-box.#{$dir}-#{$align} {
+      @include tooltip-position($dir, $align);
+    }
+  }
 }

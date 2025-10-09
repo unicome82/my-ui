@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Layout, MainHeader, MainTabs, MainContent } from './components/layout';
+import { Layout, MainHeader, MainNav, MainTabs, MainView, MainContent } from './components/layout';
 import type { ThemeType } from './components/theme';
 import { themes } from './components/theme';
 
@@ -60,7 +60,7 @@ const App = () => {
 
     if (activeTab === theme) {
       if (newTabs.length === 0) setActiveTab(null);
-      else setActiveTab(index > 0 ? newTabs[index - 1] : newTabs[0]);
+      else setActiveTab(newTabs[index > 0 ? index - 1 : 0] as ThemeType);
     }
   };
 
@@ -76,23 +76,10 @@ const App = () => {
         }
         right={<button className="btn-link">CUSTOM DEMO</button>}
       />
-      <div className="main-copy" style={{ paddingTop: headerHeight }}>
-        <h1 className="tit">UI Kit Library Project by a Designer</h1>
-        <p className="txt">디자이너의 UI Kit Library 제작 프로젝트</p>
-      </div>
+      <MainView headerHeight={headerHeight} />
 
       <Layout>
-        <nav className="nav">
-          {themes.map((theme) => (
-            <div
-              key={theme}
-              style={{ padding: '10px', cursor: 'pointer' }}
-              onClick={() => handleMenuClick(theme)}
-            >
-              {theme}
-            </div>
-          ))}
-        </nav>
+        <MainNav themes={themes} onMenuClick={handleMenuClick} />
 
         <main className="main">
           <MainTabs
@@ -104,7 +91,7 @@ const App = () => {
           <MainContent activeTab={activeTab} />
         </main>
       </Layout>
-      <footer className="footer">© 2025 UI Themes. All rights reserved.</footer>
+      <footer className="footer">© 2025 UI Themes by uni. All rights reserved.</footer>
     </div>
   );
 };

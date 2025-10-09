@@ -59,6 +59,14 @@ label {
   outline: none;
   letter-spacing: inherit;
 }
+input[type='checkbox'],
+input[type='radio'] {
+  display: none;
+}
+select {
+  appearance: none;
+  -webkit-appearance: none;
+}
 
 button {
   cursor: pointer;

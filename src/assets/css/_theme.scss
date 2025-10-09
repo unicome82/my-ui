@@ -1,0 +1,483 @@
+@use './variable' as *;
+@use './mixin' as *;
+
+/* Default */
+.theme-wrap {
+  margin: 4vmax;
+  .flex-wrap {
+    @include flex(row, flex-start, flex-start, 4vmax);
+    margin: 4vmax 0;
+    flex-wrap: wrap;
+  }
+  .col {
+    @include flex(column, flex-start, flex-start, $spacing-XS);
+  }
+  .row {
+    @include flex(row, flex-start, center, $spacing-XS);
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .theme-tit {
+    @include flex(column, flex-start, flex-start, 0.5em);
+    @include font(3vmax, 900);
+    margin: 2em 0 1em;
+    &:after {
+      content: '';
+      height: 1px;
+      width: 1em;
+      background: #000;
+    }
+  }
+  .sub-tit {
+    @include font($font-XS, 600);
+    margin-top: 2em;
+    color: $dark-L;
+  }
+
+  /* Anchor */
+  .anchor {
+    @include position(sticky, right, top);
+    @include shadow(3);
+    @include transition(0.3s, 1s);
+    padding: 1.5em;
+    float: right;
+    overflow: hidden;
+    color: #fff;
+    background: $dark-DD;
+    backdrop-filter: blur(10px);
+    z-index: 8;
+    .anchor-list {
+      .btn-anchor {
+        @include flex(column, flex-start, flex-start, 0.15em);
+        @include font($font-S, 300);
+        @include transition;
+        padding: 0.15em 0.75em 0.15em 0.15em;
+        color: $light;
+        &:after {
+          content: '';
+          transition: inherit;
+          width: 0;
+          height: 1px;
+          background: $light;
+        }
+        &:not(.current):hover {
+          margin-right: -0.5em;
+          text-indent: 0.5em;
+        }
+        &.current {
+          margin: 1em 0;
+          color: #fff;
+          &:after {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  /* Title */
+  .tit {
+    @include ellipsis;
+    max-width: 100%;
+  }
+  h1.tit {
+    @include font(40px, 900);
+  }
+  h2.tit {
+    @include font(28px, 900);
+  }
+  h3.tit {
+    @include font($font-XL, 900);
+  }
+  h4.tit {
+    @include font($font-L, 900);
+  }
+  h5.tit {
+    @include font($font-M, 900);
+  }
+  .txt {
+    @include font($font-S, 400);
+    &.link {
+      text-decoration: underline;
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+
+  /* Button */
+  .btn {
+    @include flex(row, center, center, 1em);
+    @include transition;
+    padding: 0.5em 1.5em;
+    min-height: $input-height-M;
+    border: 1px solid #000;
+    &:hover {
+      background: $dark-bg;
+    }
+    &:disabled {
+      background: $dark-bg;
+      border-color: transparent;
+      color: $dark-LL;
+      pointer-events: none;
+    }
+    &.icon {
+      padding: 0;
+      width: $input-height-M;
+    }
+    [class*='material-symbols'] {
+      margin: 0 -0.25em;
+    }
+    //Small
+    &.small {
+      @include font($font-S);
+      padding: 0.5em 1em;
+      min-height: $input-height-S;
+      &.icon {
+        width: $input-height-S;
+      }
+    }
+    //XSmall
+    &.xsmall {
+      @include font($font-XS);
+      padding: 0.25em 1em;
+      min-height: $input-height-XS;
+      &.icon {
+        width: $input-height-XS;
+      }
+    }
+    // Gray
+    &.gray {
+      background: $dark-L;
+      border-color: transparent;
+      color: #fff;
+      &:hover {
+        background: $dark-D;
+      }
+      &:disabled {
+        background: $dark-LL;
+        color: $light-LL;
+        pointer-events: none;
+      }
+    }
+    // Black
+    &.black {
+      background: #000;
+      border-color: transparent;
+      color: #fff;
+      &:hover {
+        background: $dark;
+      }
+      &:disabled {
+        background: $dark;
+        color: $light-D;
+        pointer-events: none;
+      }
+    }
+    // Primary
+    &.primary {
+      background: $primary;
+      border-color: transparent;
+      color: #fff;
+      &:hover {
+        background: $primary-D;
+      }
+      &:disabled {
+        background: $primary-LL;
+        color: $light-LL;
+      }
+    }
+    // Secondary
+    &.secondary {
+      background: $secondary;
+      border-color: transparent;
+      color: #fff;
+      &:hover {
+        background: $secondary-D;
+      }
+      &:disabled {
+        background: $secondary-LL;
+        color: $light-LL;
+      }
+    }
+  }
+
+  /* Checkbox, Radio */
+  .input-box {
+    @include flex(row, flex-start, center, 0.5em);
+    min-height: $input-height-M;
+    cursor: pointer;
+    user-select: none;
+    [class*='material-symbols'] {
+      @include flex(row, center, center);
+      @include font(inherit, 900);
+      @include transition;
+      width: 1.25em;
+      height: 1.25em;
+      border: 1px solid $dark-L;
+      color: #fff;
+    }
+    input[type='radio'] {
+      & + [class*='material-symbols'] {
+        width: 1.3em;
+        height: 1.3em;
+        border-radius: 50%;
+        color: transparent;
+      }
+      &:checked + [class*='material-symbols'] {
+        background: none;
+        border-width: 0.4em;
+      }
+    }
+    &.checked [class*='material-symbols'] {
+      background: $primary;
+      border-color: $primary;
+    }
+    &.disabled {
+      color: $dark-LL;
+      pointer-events: none;
+      [class*='material-symbols'] {
+        background: $dark-bg;
+        border-color: $dark-LL;
+        color: inherit;
+      }
+    }
+    &:not(.type-btn) {
+      margin-right: 1.5em;
+    }
+    &.type-btn {
+      @include transition;
+      border: 1px solid #000;
+      padding: 0.25em 1em;
+      [class*='material-symbols'] {
+        display: none;
+      }
+      &:hover {
+        background: $dark-bg;
+      }
+      &.disabled {
+        background: $dark-bg;
+        border-color: transparent;
+        color: $dark-LL;
+        pointer-events: none;
+      }
+      &.checked {
+        background: $primary;
+        border-color: transparent;
+        color: #fff;
+        &:hover {
+          background: $primary-D;
+        }
+        &.disabled {
+          background: $primary-LL;
+          color: $light;
+        }
+      }
+    }
+    &.small {
+      font-size: $font-S;
+      min-height: $input-height-S;
+    }
+    &.xsmall {
+      font-size: $font-XS;
+      min-height: $input-height-XS;
+    }
+    &.type-toggle {
+      [class*='material-symbols'] {
+        justify-content: flex-start;
+        border-radius: 3em;
+        border: 0;
+        padding: 0.2em;
+        width: calc(2.5em - 0.4em);
+        background: $dark-LL;
+        color: transparent;
+        overflow: hidden;
+        &:before {
+          @include transition;
+          content: '';
+          height: 100%;
+          aspect-ratio: 1/1;
+          border-radius: 50%;
+          background: #fff;
+        }
+      }
+      &.disabled {
+        [class*='material-symbols'] {
+          opacity: 0.5;
+        }
+      }
+      &.checked {
+        [class*='material-symbols'] {
+          background: $primary;
+          &:before {
+            transform: translateX(100%);
+          }
+        }
+        &.disabled {
+          [class*='material-symbols'] {
+            background: $primary-L;
+          }
+        }
+      }
+    }
+  }
+  /* Input Text */
+  .input-text {
+    @include flex(row, flex-start, center, 1em);
+    flex: 1;
+    label {
+      width: var(--label-width);
+      flex-shrink: 0;
+    }
+    input {
+      @include transition;
+      width: 100%;
+      padding: 0.5em 1em;
+      min-height: $input-height-M;
+      border: 1px solid #000;
+      outline: none;
+      &[type='number'] {
+        padding-right: 0;
+      }
+      &:focus {
+        border-color: $primary;
+        color: $primary;
+      }
+      &::placeholder {
+        color: $dark-LL;
+      }
+      &:disabled {
+        background: $dark-bg;
+        border-color: $dark-bg;
+        color: $dark-LL;
+        pointer-events: none;
+      }
+    }
+    .textarea-box {
+      @include transition;
+      width: 100%;
+      border: 1px solid #000;
+      &.focus {
+        border-color: $primary;
+        color: $primary;
+      }
+      &.disabled {
+        background: $dark-bg;
+        border-color: $dark-bg;
+        color: $dark-LL;
+        pointer-events: none;
+      }
+      textarea {
+        width: 100%;
+        height: 7em;
+        padding: 0.5em 1em;
+        outline: none;
+        resize: none;
+      }
+    }
+    &.small {
+      font-size: $font-S;
+      input {
+        min-height: $input-height-S;
+      }
+    }
+    &.xsmall {
+      font-size: $font-XS;
+      input {
+        min-height: $input-height-XS;
+      }
+    }
+  }
+
+  /* Select */
+  .select-box {
+    @include flex(row, flex-start, center, 1em);
+    @include transition;
+    position: relative;
+    user-select: none;
+    label {
+      width: var(--label-width);
+      flex-shrink: 0;
+    }
+    select,
+    .select {
+      @include flex(row, flex-start, center, 0.5em);
+      margin: 0 -1px;
+      padding: 0 2.5em 0 1em;
+      min-height: $input-height-M;
+      background: #fff;
+      border: 1px solid #000;
+      position: relative;
+      outline: none;
+      cursor: pointer;
+      &:hover {
+        border-color: $dark;
+      }
+    }
+    [class*='material-symbols'] {
+      @include position(absolute, right, center);
+      @include transition;
+      margin-right: 0.15em;
+      font-size: 1.75em;
+      pointer-events: none;
+    }
+    .option {
+      @include position(absolute, left, top);
+      z-index: 1;
+      top: 100%;
+      width: 100%;
+      background: #fff;
+      border: 1px solid #000;
+      .item {
+        @include flex(row, flex-start, center, 0.5em);
+        @include transition;
+        padding: 0.25em 1em;
+        background: #fff;
+        &:hover {
+          background: $dark-bg;
+        }
+        &.selected {
+          background: $primary-LL;
+          &:hover {
+            background: $primary-LL;
+          }
+        }
+      }
+    }
+    &.focus {
+      select,
+      .select {
+        border-color: $primary;
+      }
+
+      [class*='material-symbols'] {
+        transform: rotate(180deg) translateY(50%);
+      }
+    }
+    &.disabled {
+      :not(label) {
+        color: $dark-LL;
+      }
+      pointer-events: none;
+      select,
+      .select {
+        background: $dark-bg;
+        border-color: $dark-bg;
+      }
+    }
+    &.small {
+      font-size: $font-S;
+      select,
+      .select {
+        min-height: $input-height-S;
+      }
+    }
+    &.xsmall {
+      font-size: $font-XS;
+      select,
+      .select {
+        min-height: $input-height-XS;
+      }
+    }
+  }
+}

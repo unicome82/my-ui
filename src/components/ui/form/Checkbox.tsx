@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import Icon from '../Icon';
 
 type CheckboxProps = {
-  label: string;
-  checked?: boolean; // 부모에서 checked만 쓰면 초기 선택 상태
+  label?: string;
+  checked?: boolean;
   disabled?: boolean;
   onChange?: (checked: boolean) => void;
   className?: string;
@@ -25,10 +26,20 @@ const Checkbox = ({
     });
   };
 
+  const labelClass = [
+    'input-box',
+    className,
+    isChecked ? 'checked' : '',
+    disabled ? 'disabled' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <label style={{ display: 'block', marginBottom: 5 }} className={className}>
+    <label className={labelClass}>
       <input type="checkbox" checked={isChecked} onChange={handleChange} disabled={disabled} />
-      {label}
+      <Icon name={isChecked ? 'check' : ''} />
+      {label && label}
     </label>
   );
 };

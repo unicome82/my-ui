@@ -1,31 +1,51 @@
 import { useState } from 'react';
+import Icon from '../Icon';
 
-type RadioProps = {
+type RadioOption = {
   label: string;
+  disabled?: boolean;
 };
 
 type RadioGroupProps = {
   name: string;
-  options: RadioProps[];
+  options: RadioOption[];
   defaultSelected?: string;
+  className?: string;
+  groupClassName?: string;
 };
 
-const RadioGroup = ({ name, options, defaultSelected }: RadioGroupProps) => {
+const RadioGroup = ({
+  name,
+  options,
+  defaultSelected,
+  className = '',
+  groupClassName = '',
+}: RadioGroupProps) => {
   const [selected, setSelected] = useState(defaultSelected || '');
 
   return (
-    <div>
-      {options.map((opt) => (
-        <label key={opt.label} style={{ display: 'block', marginBottom: 5 }}>
-          <input
-            type="radio"
-            name={name}
-            checked={selected === opt.label}
-            onChange={() => setSelected(opt.label)}
-          />
-          {opt.label}
-        </label>
-      ))}
+    <div className={`input-box-group ${groupClassName}`}>
+      {options.map((opt) => {
+        const isChecked = selected === opt.label;
+        const isDisabled = opt.disabled;
+
+        return (
+          <label
+            key={opt.label}
+            className={`input-box ${className} ${isChecked ? 'checked' : ''} ${isDisabled ? 'disabled' : ''}`}
+          >
+            <input
+              type="radio"
+              name={name}
+              checked={isChecked}
+              disabled={isDisabled}
+              onChange={() => !isDisabled && setSelected(opt.label)}
+            />
+            <Icon name={isChecked ? 'check' : ''} />
+            {opt.label}
+          </label>
+        );
+      })}
     </div>
   );
 };
