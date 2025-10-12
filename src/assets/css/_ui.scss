@@ -402,9 +402,10 @@ h5.tit {
 
 /* Select */
 .select-box {
-  @include flex(row, flex-start, top, 1em);
+  @include flex(row, flex-start, top, 0.75em 1em);
   @include transition;
   position: relative;
+  white-space: nowrap;
   user-select: none;
   label {
     @include flex(row, flex-start, flex-start, 0.2em);
@@ -418,7 +419,6 @@ h5.tit {
   select,
   .select {
     @include flex(row, flex-start, center, 0.5em);
-    margin: 0 -1px;
     padding: 0 2.5em 0 1em;
     width: 100%;
     min-height: $input-height-M;
@@ -439,7 +439,7 @@ h5.tit {
   }
   .option {
     @include position(absolute, left, top);
-    margin: -1px;
+    margin: -1px 0;
     z-index: 1;
     top: 100%;
     width: 100%;

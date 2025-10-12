@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github-unicome82.github.io/my-ui/",
+  "homepage": "https://unicome82.github.io/my-ui/",
   "scripts": {
     "local": "vite",
     "build": "vite build",

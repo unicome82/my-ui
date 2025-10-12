@@ -9,8 +9,13 @@
   --invert-color: #000;
   color: #fff;
   .nav {
-    border-color: $dark;
-    .btn-mode {
+    &.open {
+      border-color: $dark;
+    }
+    .nav-tit {
+      color: $light-D;
+    }
+    .btn-setting {
       filter: invert(1);
     }
   }

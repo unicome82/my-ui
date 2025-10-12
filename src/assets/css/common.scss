@@ -4,6 +4,7 @@
 @use './font' as *;
 @use './ui' as *;
 @use './theme' as *;
+@use './mobile' as *;
 
 /* Common */
 body {
@@ -23,8 +24,9 @@ body {
     min-height: 100vh;
   }
   .main {
-    width: calc(100% - $nav-width);
-    max-width: calc(100% - 10em);
+    @include transition;
+    width: 100%;
+    max-width: 100%;
     .drag-scroll {
       @include position(sticky, unset, top);
       @include transition;
@@ -117,15 +119,17 @@ body {
 
 /* Nav */
 .nav {
-  min-width: 10em;
-  width: $nav-width;
-  border-right: 1px solid #000;
+  @include position(sticky, unset, top);
+  @include flex(column, flex-start, unset);
+  @include transition;
+  min-width: 0;
+  width: 0;
+  height: 100vh;
   flex-shrink: 0;
   .sticky {
-    @include position(sticky, unset, top);
     @include flex(column, flex-start, flex-start);
-    padding: $spacing-S 0;
-    max-height: 100vh;
+    flex: 1;
+    overflow: hidden;
   }
   .nav-tit {
     @include font(10px, 600);
@@ -138,7 +142,6 @@ body {
     @include flex(column, flex-start, flex-start);
     margin-top: 1em;
     width: 100%;
-    flex: 1;
     overflow: hidden auto;
     .nav-item {
       @include inline-flex(column, flex-start, flex-start);
@@ -165,10 +168,28 @@ body {
     width: 100%;
     text-align: left;
   }
+  .select-box {
+    padding: 1.5vmax;
+    width: 100%;
+  }
   .btn-mode {
     border-radius: 0.5em;
-    background: $dark-DD;
-    color: #fff;
+  }
+  .btn-setting {
+    @include position(absolute, left, bottom);
+    left: 100%;
+    bottom: 1.5vmax;
+    border-radius: 0 0.5em 0.5em 0;
+    flex-shrink: 0;
+  }
+  &.open {
+    min-width: 10em;
+    width: $nav-width;
+    border-right: 1px solid #000;
+    & + .main {
+      width: calc(100% - $nav-width);
+      max-width: calc(100% - 10em);
+    }
   }
 }
 

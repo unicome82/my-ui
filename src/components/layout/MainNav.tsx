@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Select, Icon, Button } from '@/components/ui';
 import { ThemeType, fonts, FontType } from '@/components/theme';
 
@@ -18,8 +19,11 @@ const MainNav: React.FC<MainNavProps> = ({
   isDark,
   setIsDark,
 }) => {
+  const [navOpen, setNavOpen] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
+  );
   return (
-    <nav className="nav">
+    <nav className={`nav${navOpen ? ' open' : ''}`}>
       <div className="sticky">
         <h4 className="nav-tit">
           Theme
@@ -28,14 +32,19 @@ const MainNav: React.FC<MainNavProps> = ({
             onClick={() => setIsDark((v) => !v)}
             aria-pressed={isDark}
           >
-            <Icon name={isDark ? 'light_mode' : 'dark_mode'} size="1.5em" />
+            <Icon name={isDark ? 'light_mode' : 'dark_mode'} />
           </Button>
         </h4>
         <div className="nav-list">
           {themes.map((theme) => (
             <button
               key={theme}
-              onClick={() => onMenuClick(theme)}
+              onClick={() => {
+                onMenuClick(theme);
+                if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+                  setNavOpen(false);
+                }
+              }}
               className={`nav-item ${theme.toLowerCase()}`}
             >
               {theme}
@@ -43,17 +52,22 @@ const MainNav: React.FC<MainNavProps> = ({
           ))}
         </div>
         <h4 className="nav-tit">Font</h4>
-        <div className="nav-item">
-          <Select
-            className="small"
-            width="100%"
-            type="dropdown"
-            value={selectedFont}
-            options={fonts.map((f) => ({ label: f, value: f }))}
-            onChange={(value: string) => onFontChange(value as FontType)}
-          />
-        </div>
+        <Select
+          className="small"
+          width="100%"
+          type="dropdown"
+          value={selectedFont}
+          options={fonts.map((f) => ({ label: f, value: f }))}
+          onChange={(value: string) => onFontChange(value as FontType)}
+        />
       </div>
+      <Button
+        className="btn-setting black icon xsmall"
+        onClick={() => setNavOpen((v) => !v)}
+        aria-pressed={navOpen}
+      >
+        <Icon name={navOpen ? 'keyboard_double_arrow_left' : 'settings'} fill />
+      </Button>
     </nav>
   );
 };
