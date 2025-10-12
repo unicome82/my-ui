@@ -1,0 +1,507 @@
+@use './variable' as *;
+@use './mixin' as *;
+
+/* Default */
+.theme-wrap {
+  padding: 4vmax;
+  letter-spacing: 0.05em;
+  .flex-wrap {
+    @include flex(row, flex-start, flex-start, 4vmax);
+    margin: 4vmax 0;
+    flex-wrap: wrap;
+  }
+  .col {
+    @include flex(column, flex-start, flex-start, $spacing-XS);
+  }
+  .row {
+    @include flex(row, flex-start, flex-start, $spacing-XS);
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .theme-tit {
+    @include flex(column, flex-start, flex-start, 0.5em);
+    @include font(3vmax, 900);
+    margin: 2em 0 1em;
+    &:after {
+      content: '';
+      height: 1px;
+      width: 1em;
+      border-bottom: 1px solid var(--border-color, #000);
+    }
+  }
+  .sub-tit {
+    @include font($font-XS, 600);
+    margin-top: 2em;
+    color: $dark-L;
+  }
+  .inner-wrap {
+    width: 100%;
+  }
+  .required-mark {
+    color: $error;
+  }
+  .error {
+    select,
+    .select,
+    input,
+    .textarea-box {
+      border-color: $error;
+    }
+    .error-msg {
+      margin: 0.25em 0;
+      color: $error;
+    }
+  }
+  ::placeholder {
+    color: $dark-LL;
+  }
+}
+
+/* Anchor */
+.anchor {
+  @include position(sticky, right, top);
+  z-index: 8;
+  .anchor-list {
+    @include shadow(3);
+    padding: 1.5em;
+    float: right;
+    color: #fff;
+    background: $dark-DD;
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(10px);
+    .btn-anchor {
+      @include flex(column, flex-start, flex-start, 0.15em);
+      @include font($font-XS, 300);
+      @include transition;
+      padding: 0.15em 0.75em 0.15em 0.15em;
+      width: calc(100% + 0.5em);
+      text-align: left;
+      color: $light;
+      &:after {
+        @include transition(inherit, 0.3s);
+        content: '';
+        width: 0;
+        height: 1px;
+        background: $light;
+      }
+      &:not(.current):hover {
+        margin-right: -0.5em;
+        padding-left: 0.65em;
+      }
+      &.current {
+        margin: 1em 0;
+        color: #fff;
+        &:after {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+/* Title */
+.tit {
+  @include ellipsis;
+  max-width: 100%;
+}
+h1.tit {
+  @include font(40px, 900);
+}
+h2.tit {
+  @include font(28px, 900);
+}
+h3.tit {
+  @include font($font-XL, 900);
+}
+h4.tit {
+  @include font($font-L, 900);
+}
+h5.tit {
+  @include font($font-M, 900);
+}
+.txt {
+  @include font($font-S, 400);
+  &.link {
+    text-decoration: underline;
+    &:hover {
+      color: var(--primary);
+    }
+  }
+}
+
+/* Button */
+.btn {
+  @include flex(row, center, center, 1em);
+  @include transition;
+  padding: 0.5em 1.5em;
+  min-height: $input-height-M;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius);
+  &:hover {
+    background: $dark-bg;
+  }
+  &:disabled {
+    border-color: transparent;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+  &.icon {
+    padding: 0;
+    width: $input-height-M;
+  }
+  .ico {
+    margin: 0 -0.25em;
+    font-size: 1.25em;
+  }
+  //Small
+  &.small {
+    @include font($font-S);
+    padding: 0.5em 1em;
+    min-height: $input-height-S;
+    &.icon {
+      width: $input-height-S;
+    }
+  }
+  //XSmall
+  &.xsmall {
+    @include font($font-XS);
+    padding: 0.25em 1em;
+    min-height: $input-height-XS;
+    &.icon {
+      width: $input-height-XS;
+    }
+  }
+  // Line
+  &.line {
+    border-color: var(--btn-border-color, #000);
+  }
+  // Gray
+  &.gray {
+    background: $dark-L;
+    border-color: transparent;
+    color: #fff;
+    &:hover {
+      background: $dark;
+    }
+  }
+  // Black
+  &.black {
+    background: #000;
+    border-color: transparent;
+    color: #fff;
+    &:hover {
+      background: $dark-D;
+    }
+  }
+  // Primary
+  &.primary {
+    background: var(--primary);
+    border-color: transparent;
+    color: #fff;
+    &:hover {
+      background: var(--primary-D);
+    }
+  }
+  // Secondary
+  &.secondary {
+    background: var(--secondary);
+    border-color: transparent;
+    color: #fff;
+    &:hover {
+      background: var(--secondary-D);
+    }
+  }
+}
+
+/* Checkbox, Radio */
+.input-box {
+  @include flex(row, flex-start, center, 0.5em);
+  min-height: $input-height-M;
+  cursor: pointer;
+  user-select: none;
+  .ico {
+    @include flex(row, center, center);
+    @include font(inherit, 900);
+    @include transition;
+    width: 1.3em;
+    height: 1.3em;
+    border: 1px solid var(--input-border-color, #000);
+    border-radius: calc(var(--border-radius) / 2);
+    color: #fff;
+  }
+  input[type='radio'] {
+    & + .ico {
+      border-radius: 50%;
+      color: transparent;
+    }
+    &:checked + .ico {
+      background: none;
+      border-width: 0.4em;
+    }
+  }
+  &.checked .ico {
+    background: var(--primary);
+    border-color: var(--primary);
+  }
+  &.disabled {
+    opacity: 0.2;
+    pointer-events: none;
+    &:not(.checked) {
+      .ico {
+        background: $dark-bg;
+      }
+    }
+  }
+  &:not(.type-btn) {
+    margin-right: 1.5em;
+  }
+  &.type-btn {
+    @include transition;
+    border: 1px solid var(--btn-border-color, #000);
+    padding: 0.25em 1em;
+    border-radius: var(--border-radius);
+    .ico {
+      display: none;
+    }
+    &:hover {
+      background: $dark-bg;
+    }
+    &.disabled {
+      opacity: 0.2;
+      pointer-events: none;
+    }
+    &.checked {
+      background: var(--primary);
+      border-color: transparent;
+      color: #fff;
+      &:hover {
+        background: var(--primary-D);
+      }
+    }
+  }
+  &.small {
+    font-size: $font-S;
+    min-height: $input-height-S;
+  }
+  &.xsmall {
+    font-size: $font-XS;
+    min-height: $input-height-XS;
+  }
+  &.type-toggle {
+    .ico {
+      justify-content: flex-start;
+      border-radius: 3em;
+      border: 0;
+      padding: 0.2em;
+      width: 2.2em;
+      background: $dark-LL;
+      color: transparent;
+      overflow: hidden;
+      &:before {
+        @include transition;
+        content: '';
+        height: 100%;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        background: #fff;
+      }
+    }
+    &.checked {
+      .ico {
+        background: var(--primary);
+        &:before {
+          transform: translateX(100%);
+        }
+      }
+    }
+  }
+}
+/* Input Text */
+.input-text {
+  @include flex(row, flex-start, flex-start, 1em);
+  flex: 1;
+  label {
+    @include flex(row, flex-start, flex-start, 0.2em);
+    padding-top: 0.7em;
+    width: var(--label-width);
+    flex-shrink: 0;
+  }
+  input {
+    @include transition;
+    width: 100%;
+    padding: 0.5em 1em;
+    min-height: $input-height-M;
+    border: 1px solid var(--input-border-color, #000);
+    border-radius: var(--border-radius);
+    outline: none;
+    &[type='number'] {
+      padding-right: 0;
+    }
+    &:not(:read-only):focus {
+      border-color: var(--primary);
+    }
+    &:disabled {
+      opacity: 0.2;
+      background: $dark-bg;
+      pointer-events: none;
+      &::placeholder {
+        color: inherit;
+      }
+    }
+  }
+  .textarea-box {
+    @include transition;
+    padding: 0.5em;
+    width: 100%;
+    border: 1px solid var(--input-border-color, #000);
+    border-radius: var(--border-radius);
+    &:not(.readonly).focus {
+      border-color: var(--primary);
+    }
+    &.disabled {
+      opacity: 0.2;
+      background: $dark-bg;
+      pointer-events: none;
+      ::placeholder {
+        color: inherit;
+      }
+    }
+    textarea {
+      padding: 0 0.5em;
+      display: block;
+      width: 100%;
+      height: 7em;
+      outline: none;
+      resize: none;
+      &::-webkit-scrollbar {
+        background: none;
+        width: 0.4em;
+      }
+      &::-webkit-scrollbar-track {
+        margin: 0.5em 0;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: $dark-LL;
+        border-radius: 0.4em;
+      }
+    }
+  }
+  &.small {
+    font-size: $font-S;
+    input {
+      min-height: $input-height-S;
+    }
+  }
+  &.xsmall {
+    font-size: $font-XS;
+    input {
+      min-height: $input-height-XS;
+    }
+  }
+}
+
+/* Select */
+.select-box {
+  @include flex(row, flex-start, top, 1em);
+  @include transition;
+  position: relative;
+  user-select: none;
+  label {
+    @include flex(row, flex-start, flex-start, 0.2em);
+    padding-top: 0.7em;
+    width: var(--label-width);
+    flex-shrink: 0;
+  }
+  .select-area {
+    position: relative;
+  }
+  select,
+  .select {
+    @include flex(row, flex-start, center, 0.5em);
+    margin: 0 -1px;
+    padding: 0 2.5em 0 1em;
+    width: 100%;
+    min-height: $input-height-M;
+    border: 1px solid var(--input-border-color, #000);
+    border-radius: var(--border-radius);
+    outline: none;
+    cursor: pointer;
+  }
+  .ico {
+    @include position(absolute, right, center);
+    @include transition;
+    margin-right: 0.15em;
+    font-size: 1.75em;
+    pointer-events: none;
+  }
+  option {
+    color: #000;
+  }
+  .option {
+    @include position(absolute, left, top);
+    margin: -1px;
+    z-index: 1;
+    top: 100%;
+    width: 100%;
+    background: $light-DD;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--input-border-color, #000);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    &::-webkit-scrollbar {
+      background: none;
+      width: 0.4em;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $dark-LL;
+    }
+    .item {
+      @include flex(row, flex-start, center, 0.5em);
+      @include transition;
+      padding: 0.5em 1em;
+      &:hover {
+        background: $dark-bg;
+      }
+      &.selected {
+        background: var(--primary);
+        color: #fff;
+      }
+    }
+  }
+  &.drop-up .option {
+    top: auto;
+    bottom: 100%;
+  }
+  &.focus {
+    select,
+    .select {
+      border-color: var(--primary);
+    }
+
+    .ico {
+      transform: rotate(180deg) translateY(50%);
+    }
+  }
+  &.disabled {
+    opacity: 0.2;
+    pointer-events: none;
+    select,
+    .select {
+      background: $dark-bg;
+    }
+  }
+  &.small {
+    font-size: $font-S;
+    select,
+    .select {
+      min-height: $input-height-S;
+    }
+  }
+  &.xsmall {
+    font-size: $font-XS;
+    select,
+    .select {
+      min-height: $input-height-XS;
+    }
+  }
+}

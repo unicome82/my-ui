@@ -1,17 +1,18 @@
-import { Button, Icon, Checkbox, Radio, Select, Input, Textarea } from '../ui';
-import { Anchor } from '../util';
-import type { ThemeType } from '../theme';
-import { themeMap } from '../theme';
+import { Button, Icon, Checkbox, Radio, Select, Input, Textarea } from '@/components/ui';
+import { Anchor } from '@/components/util';
+import { ThemeType, themeMap, FontType } from '@/components/theme';
 
 type MainContentProps = {
   activeTab: ThemeType | null;
+  font: FontType;
+  isDark?: boolean;
 };
 
-const MainContent = ({ activeTab }: MainContentProps) => {
+const MainContent = ({ activeTab, font }: MainContentProps) => {
   // activeTab이 없으면 기본 className을 적용
   const className = activeTab ? themeMap[activeTab] : '';
   return (
-    <div className={'theme-wrap ' + className}>
+    <div className={`theme-wrap ${className} ${font.replace(/\s+/g, '-')}`}>
       <Anchor top="50px" />
       <h1 className="theme-tit">{activeTab || 'Default'}</h1>
       {/* Text */}
@@ -35,22 +36,36 @@ const MainContent = ({ activeTab }: MainContentProps) => {
           {/* Default */}
           <div className="row">
             <Button className="icon">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button>
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Default
             </Button>
             <Button>Default</Button>
             <Button disabled>Disabled</Button>
           </div>
+          {/* Line */}
+          <div className="row">
+            <Button className="line icon">
+              <Icon name="search" fill />
+            </Button>
+            <Button className="line">
+              <Icon name="search" fill />
+              Default
+            </Button>
+            <Button className="line">Default</Button>
+            <Button className="line" disabled>
+              Disabled
+            </Button>
+          </div>
           {/* Gray */}
           <div className="row">
             <Button className="gray icon">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="gray">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Gray
             </Button>
             <Button className="gray">Gray</Button>
@@ -61,10 +76,10 @@ const MainContent = ({ activeTab }: MainContentProps) => {
           {/* Black */}
           <div className="row">
             <Button className="black icon">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="black">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Black
             </Button>
             <Button className="black">Black</Button>
@@ -75,10 +90,10 @@ const MainContent = ({ activeTab }: MainContentProps) => {
           {/* Primary */}
           <div className="row">
             <Button className="primary icon">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="primary">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Primary
             </Button>
             <Button className="primary">Primary</Button>
@@ -89,10 +104,10 @@ const MainContent = ({ activeTab }: MainContentProps) => {
           {/* Secondary */}
           <div className="row">
             <Button className="secondary icon">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="secondary">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Secondary
             </Button>
             <Button className="secondary">Secondary</Button>
@@ -106,10 +121,10 @@ const MainContent = ({ activeTab }: MainContentProps) => {
           {/* Default */}
           <div className="row">
             <Button className="icon small">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="small">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Default
             </Button>
             <Button className="small">Default</Button>
@@ -117,13 +132,27 @@ const MainContent = ({ activeTab }: MainContentProps) => {
               Disabled
             </Button>
           </div>
+          {/* Line */}
+          <div className="row">
+            <Button className="line icon small">
+              <Icon name="search" fill />
+            </Button>
+            <Button className="line small">
+              <Icon name="search" fill />
+              Default
+            </Button>
+            <Button className="line small">Default</Button>
+            <Button className="line small" disabled>
+              Disabled
+            </Button>
+          </div>
           {/* Gray */}
           <div className="row">
             <Button className="gray icon small">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="gray small">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Gray
             </Button>
             <Button className="gray small">Gray</Button>
@@ -134,10 +163,10 @@ const MainContent = ({ activeTab }: MainContentProps) => {
           {/* Black */}
           <div className="row">
             <Button className="black icon small">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="black small">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Black
             </Button>
             <Button className="black small">Black</Button>
@@ -148,10 +177,10 @@ const MainContent = ({ activeTab }: MainContentProps) => {
           {/* Primary */}
           <div className="row">
             <Button className="primary icon small">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="primary small">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Primary
             </Button>
             <Button className="primary small">Primary</Button>
@@ -162,10 +191,10 @@ const MainContent = ({ activeTab }: MainContentProps) => {
           {/* Secondary */}
           <div className="row">
             <Button className="secondary icon small">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="secondary small">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Secondary
             </Button>
             <Button className="secondary small">Secondary</Button>
@@ -179,10 +208,10 @@ const MainContent = ({ activeTab }: MainContentProps) => {
           {/* Default */}
           <div className="row">
             <Button className="icon xsmall">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="xsmall">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Default
             </Button>
             <Button className="xsmall">Default</Button>
@@ -190,13 +219,27 @@ const MainContent = ({ activeTab }: MainContentProps) => {
               Disabled
             </Button>
           </div>
+          {/* Line */}
+          <div className="row">
+            <Button className="line icon xsmall">
+              <Icon name="search" fill />
+            </Button>
+            <Button className="line xsmall">
+              <Icon name="search" fill />
+              Default
+            </Button>
+            <Button className="line xsmall">Default</Button>
+            <Button className="line xsmall" disabled>
+              Disabled
+            </Button>
+          </div>
           {/* Gray */}
           <div className="row">
             <Button className="gray icon xsmall">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="gray xsmall">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Gray
             </Button>
             <Button className="gray xsmall">Gray</Button>
@@ -207,10 +250,10 @@ const MainContent = ({ activeTab }: MainContentProps) => {
           {/* Black */}
           <div className="row">
             <Button className="black icon xsmall">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="black xsmall">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Black
             </Button>
             <Button className="black xsmall">Black</Button>
@@ -221,10 +264,10 @@ const MainContent = ({ activeTab }: MainContentProps) => {
           {/* Primary */}
           <div className="row">
             <Button className="primary icon xsmall">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="primary xsmall">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Primary
             </Button>
             <Button className="primary xsmall">Primary</Button>
@@ -235,10 +278,10 @@ const MainContent = ({ activeTab }: MainContentProps) => {
           {/* Secondary */}
           <div className="row">
             <Button className="secondary icon xsmall">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
             </Button>
             <Button className="secondary xsmall">
-              <Icon name="search" fill size={`1.25em`} />
+              <Icon name="search" fill />
               Secondary
             </Button>
             <Button className="secondary xsmall">Secondary</Button>
@@ -409,7 +452,7 @@ const MainContent = ({ activeTab }: MainContentProps) => {
                   { label: '바나나', value: 'banana' },
                   { label: '체리', value: 'cherry' },
                 ]}
-                defaultValue="banana"
+                required
               />
               <Select
                 type="dropdown"
@@ -418,7 +461,7 @@ const MainContent = ({ activeTab }: MainContentProps) => {
                   { label: '바나나', value: 'banana' },
                   { label: '체리', value: 'cherry' },
                 ]}
-                defaultValue="banana"
+                required
               />
             </div>
             <div className="row">
@@ -548,19 +591,19 @@ const MainContent = ({ activeTab }: MainContentProps) => {
           <div className="col">
             <h4 className="sub-tit">Input Text</h4>
             <div className="row">
-              <Input label="Label" placeholder="텍스트 입력" />
+              <Input label="Label" placeholder="텍스트 입력" required />
               <Input type="password" placeholder="비밀번호" />
             </div>
             <div className="row">
-              <Input label="Label" type="email" placeholder="이메일" />
+              <Input label="Label" type="email" placeholder="이메일" required />
               <Input type="number" placeholder="숫자 입력" />
             </div>
             <div className="row">
-              <Input label="Label" placeholder="텍스트 입력" value="읽기전용" readOnly />
+              <Input label="Label" placeholder="텍스트 입력" value="읽기전용" readonly />
               <Input placeholder="비활성화" disabled />
             </div>
             <div className="row">
-              <Textarea label="Label" placeholder="텍스트를 입력해주세요." rows={6} />
+              <Textarea label="Label" placeholder="텍스트를 입력해주세요." rows={6} required />
             </div>
           </div>
           <div className="col">
@@ -579,7 +622,7 @@ const MainContent = ({ activeTab }: MainContentProps) => {
                 label="Label"
                 placeholder="텍스트 입력"
                 value="읽기전용"
-                readOnly
+                readonly
               />
               <Input className="small" placeholder="비활성화" disabled />
             </div>
@@ -588,7 +631,10 @@ const MainContent = ({ activeTab }: MainContentProps) => {
                 className="small"
                 label="Label"
                 placeholder="텍스트를 입력해주세요."
+                value="읽기전용"
                 rows={6}
+                required
+                readonly
               />
             </div>
           </div>
@@ -608,7 +654,7 @@ const MainContent = ({ activeTab }: MainContentProps) => {
                 label="Label"
                 placeholder="텍스트 입력"
                 value="읽기전용"
-                readOnly
+                readonly
               />
               <Input className="xsmall" placeholder="비활성화" disabled />
             </div>
@@ -618,6 +664,7 @@ const MainContent = ({ activeTab }: MainContentProps) => {
                 label="Label"
                 placeholder="텍스트를 입력해주세요."
                 rows={6}
+                required
               />
             </div>
           </div>

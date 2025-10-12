@@ -40,6 +40,12 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    // Base Url
+    "baseUrl": "src", // src를 기준으로 절대경로 설정
+    "paths": {
+      "@/*": ["*"] // 예: @/components/Button → src/components/Button
+    }
   }
 }

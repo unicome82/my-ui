@@ -5,11 +5,13 @@ interface ButtonProps {
   className?: string;
   disabled?: boolean;
   children?: ReactNode; // 버튼 텍스트
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  [key: string]: any;
 }
 
-const Button = ({ className = '', disabled = false, children }: ButtonProps) => {
+const Button = ({ className = '', disabled = false, children, onClick }: ButtonProps) => {
   return (
-    <button className={`btn ${className}`} disabled={disabled}>
+    <button className={`btn ${className}`} disabled={disabled} onClick={onClick}>
       {children}
     </button>
   );

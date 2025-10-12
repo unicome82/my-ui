@@ -59,7 +59,7 @@ const Anchor = ({ items, top = '0px' }: AnchorProps) => {
   };
 
   return (
-    <article className="anchor" style={{ top }}>
+    <article className="anchor" style={{ top: `calc(${top} + 2em)` }}>
       <ul className="anchor-list">
         {sections.map((sec) => (
           <li key={sec.id}>

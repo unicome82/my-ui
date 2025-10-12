@@ -1,6 +1,8 @@
 @use './variable' as *;
 @use './mixin' as *;
 @use './base' as *;
+@use './font' as *;
+@use './ui' as *;
 @use './theme' as *;
 
 /* Common */
@@ -25,16 +27,29 @@ body {
     max-width: calc(100% - 10em);
     .drag-scroll {
       @include position(sticky, unset, top);
-      background: rgba(222, 221, 220, 0.5);
+      @include transition;
+      background: $dark-bg;
       backdrop-filter: blur(10px);
       z-index: 8;
     }
   }
   .footer {
-    @include font(11px, 200);
-    padding: 8vh 4vmax;
+    @include flex(row, space-between);
+    @include font(11px);
+    padding: 4vh 4vmax;
     background: #000;
-    color: #fff;
+    color: $light-L;
+    .btn-top {
+      @include flex(row, center, center, 0.25em);
+      font-weight: 600;
+      padding: 1em 1.5em;
+      border-radius: 50%;
+      border: 2px solid $light-L;
+      &:hover {
+        background: #fff;
+        color: #000;
+      }
+    }
   }
 }
 
@@ -51,7 +66,7 @@ body {
   z-index: 10;
   .logo {
     @include transition;
-    @include font(3vmax, 900);
+    @include font(3vmax, 900, 1);
   }
   .btn-link {
     @include flex(column, flex-start, flex-end, 0.25em);
@@ -91,6 +106,9 @@ body {
   .tit {
     @include font(8vmax, 900, 1);
     margin-left: -0.05em;
+    text-overflow: unset;
+    white-space: wrap;
+    overflow: visible;
   }
   .tag-list {
     margin-top: 3em;
@@ -103,13 +121,54 @@ body {
   width: $nav-width;
   border-right: 1px solid #000;
   flex-shrink: 0;
-  .nav-list {
+  .sticky {
     @include position(sticky, unset, top);
-    padding: $spacing-L 2%;
+    @include flex(column, flex-start, flex-start);
+    padding: $spacing-S 0;
+    max-height: 100vh;
+  }
+  .nav-tit {
+    @include font(10px, 600);
+    @include flex(row, space-between, center, 0.5em);
+    padding: 2em 1.5vmax 0;
+    width: 100%;
+    color: $dark-L;
+  }
+  .nav-list {
+    @include flex(column, flex-start, flex-start);
+    margin-top: 1em;
+    width: 100%;
+    flex: 1;
+    overflow: hidden auto;
+    .nav-item {
+      @include inline-flex(column, flex-start, flex-start);
+      @include transition;
+      width: auto;
+      &:after {
+        content: '';
+        width: 0;
+        height: 1px;
+        border-bottom: 1px solid var(--input-border-color, #000);
+        transition: inherit;
+        transition-delay: 0.1s;
+      }
+      &:hover {
+        transform: translateX(0.4em);
+        &:after {
+          width: calc(100% + 2em);
+        }
+      }
+    }
   }
   .nav-item {
-    @include flex(row, center, center);
-    padding: $spacing-S;
+    padding: 0.75em 1.5vmax;
+    width: 100%;
+    text-align: left;
+  }
+  .btn-mode {
+    border-radius: 0.5em;
+    background: $dark-DD;
+    color: #fff;
   }
 }
 
@@ -122,7 +181,7 @@ body {
     @include transition;
     padding: $spacing-XS 24px;
     height: $spacing-XL;
-    color: $dark-L;
+    opacity: 0.3;
     cursor: pointer;
     .btn-close {
       @include flex(row, center, center);
@@ -130,6 +189,9 @@ body {
       margin-right: -24px;
       padding: 4px;
       opacity: 0;
+      .ico {
+        font-size: 1.5em;
+      }
     }
     &:not(:first-child):hover {
       padding: $spacing-XS 16px;
@@ -139,8 +201,8 @@ body {
       }
     }
     &.current {
+      opacity: 1;
       background: #fff;
-      color: #000;
     }
   }
 }

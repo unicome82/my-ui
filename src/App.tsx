@@ -1,25 +1,39 @@
 import { useState, useEffect, useRef } from 'react';
-import { Layout, MainHeader, MainNav, MainTabs, MainView, MainContent } from './components/layout';
-import type { ThemeType } from './components/theme';
-import { themes } from './components/theme';
+import { Layout, MainHeader, MainNav, MainTabs, MainView, MainContent } from '@/components/layout';
+import { themes, ThemeType, fonts, FontType } from '@/components/theme';
 
 const App = () => {
   const [tabs, setTabs] = useState<ThemeType[]>([]);
   const [activeTab, setActiveTab] = useState<ThemeType | null>(null);
+  const [selectedFont, setSelectedFont] = useState<FontType>(fonts[0]);
   const [headerHeight, setHeaderHeight] = useState(0);
   const headerRef = useRef<HTMLDivElement | null>(null);
 
-  const [isHidden, setIsHidden] = useState(false); // 스크롤 방향
+  const mainViewRef = useRef<HTMLDivElement | null>(null);
+  const [mainViewHeight, setMainViewHeight] = useState(0);
+
+  const [isHidden, setIsHidden] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
+  const [isDark, setIsDark] = useState(false);
 
   // Header 높이 측정
   useEffect(() => {
-    const updateHeight = () => {
+    const updateHeaderHeight = () => {
       if (headerRef.current) setHeaderHeight(headerRef.current.offsetHeight);
     };
-    updateHeight();
-    window.addEventListener('resize', updateHeight);
-    return () => window.removeEventListener('resize', updateHeight);
+    updateHeaderHeight();
+    window.addEventListener('resize', updateHeaderHeight);
+    return () => window.removeEventListener('resize', updateHeaderHeight);
+  }, []);
+
+  // MainView 높이 측정
+  useEffect(() => {
+    const updateMainViewHeight = () => {
+      if (mainViewRef.current) setMainViewHeight(mainViewRef.current.offsetHeight);
+    };
+    updateMainViewHeight();
+    window.addEventListener('resize', updateMainViewHeight);
+    return () => window.removeEventListener('resize', updateMainViewHeight);
   }, []);
 
   // 스크롤 감지
@@ -29,22 +43,27 @@ const App = () => {
     const handleScroll = () => {
       const currentY = window.scrollY;
 
-      // fixed: 스크롤 0 이상
+      // fixed
       setIsFixed(currentY > 0);
 
-      // hidden: headerHeight 이상 + 아래로 스크롤
-      if (currentY > headerHeight && currentY > lastScrollY) {
+      // hidden: MainView 높이 이상 + 스크롤 다운
+      if (currentY > mainViewHeight && currentY > lastScrollY) {
         setIsHidden(true);
-      } else if (currentY < lastScrollY) {
+      } else if (currentY <= mainViewHeight) {
         setIsHidden(false);
       }
+
+      // 스크롤 업
+      // else if (currentY < lastScrollY) {
+      //   setIsHidden(false);
+      // }
 
       lastScrollY = currentY;
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [headerHeight]);
+  }, [mainViewHeight]);
 
   //Tab
   const handleMenuClick = (theme: ThemeType) => {
@@ -76,10 +95,17 @@ const App = () => {
         }
         right={<button className="btn-link">CUSTOM DEMO</button>}
       />
-      <MainView headerHeight={headerHeight} />
+      <MainView ref={mainViewRef} headerHeight={headerHeight} />
 
-      <Layout>
-        <MainNav themes={themes} onMenuClick={handleMenuClick} />
+      <Layout isDark={isDark}>
+        <MainNav
+          themes={themes}
+          onMenuClick={handleMenuClick}
+          selectedFont={selectedFont}
+          onFontChange={setSelectedFont}
+          isDark={isDark}
+          setIsDark={setIsDark}
+        />
 
         <main className="main">
           <MainTabs
@@ -88,10 +114,15 @@ const App = () => {
             setActiveTab={setActiveTab}
             closeTab={closeTab}
           />
-          <MainContent activeTab={activeTab} />
+          <MainContent activeTab={activeTab} font={selectedFont} />
         </main>
       </Layout>
-      <footer className="footer">© 2025 UI Themes by uni. All rights reserved.</footer>
+      <footer className="footer">
+        <p className="copyright">© 2025 UI Themes by uni. All rights reserved.</p>
+        <a href="#top" className="btn-top">
+          TOP
+        </a>
+      </footer>
     </div>
   );
 };

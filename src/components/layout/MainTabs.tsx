@@ -1,6 +1,6 @@
-import type { ThemeType } from '../theme';
-import { Icon } from '../ui';
-import { DragScroll } from '../util';
+import { ThemeType } from '@/components/theme';
+import { Icon } from '@/components/ui';
+import { DragScroll } from '@/components/util';
 
 type MainTabsProps = {
   tabs: ThemeType[];
@@ -30,7 +30,7 @@ const MainTabs = ({ tabs, activeTab, setActiveTab, closeTab }: MainTabsProps) =>
           >
             {tab}
             <button onClick={(e) => closeTab(tab, e)} className="btn-close">
-              <Icon name="close" fill size={14} />
+              <Icon name="close" fill />
             </button>
           </li>
         ))}

@@ -1,13 +1,14 @@
-import { Tooltip } from '../util';
+import { forwardRef } from 'react';
+import { Tooltip } from '@/components/util';
 
 interface MainViewProps {
   headerHeight: number | string;
 }
 const tags = ['React', 'Github', 'ChatGPT', 'Google Fonts', 'Google Symbol', 'SCSS'];
 
-const MainView: React.FC<MainViewProps> = ({ headerHeight }) => {
+const MainView = forwardRef<HTMLDivElement, MainViewProps>(({ headerHeight }, ref) => {
   return (
-    <div className="main-copy" style={{ paddingTop: headerHeight }}>
+    <div ref={ref} className="main-copy" style={{ paddingTop: headerHeight }}>
       <Tooltip button="" right-center click>
         <h1 className="fw100">About</h1>
         <p>
@@ -30,6 +31,6 @@ const MainView: React.FC<MainViewProps> = ({ headerHeight }) => {
       </ul>
     </div>
   );
-};
+});
 
 export default MainView;
